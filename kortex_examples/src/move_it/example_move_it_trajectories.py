@@ -188,12 +188,14 @@ def main():
       rospy.delete_param("/kortex_examples_test_results/moveit_general_python")
   except:
       pass
-
+    
+  # NOTICE: This example does not work well in gazebo
+  """
   if success:
     rospy.loginfo("Reaching Named Target Vertical...")
     success &= example.reach_named_position("vertical")
     print (success)
-  
+  """
   if success:
     rospy.loginfo("Reaching Joint Angles...")  
     success &= example.reach_joint_angles(tolerance=0.01) #rad
