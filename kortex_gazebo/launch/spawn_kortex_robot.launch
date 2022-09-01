@@ -17,6 +17,9 @@
     <arg name="dof" default="6" if="$(eval arg('arm') == 'gen3_lite')"/> <!-- Number of degrees of freedom of the arm -->
     <arg name="vision" default="true"/> <!-- True if the arm has a Vision module -->
     
+    <!-- Moveit -->
+    <arg name="pipeline" default="ompl" />
+
     <!-- Default gripper for Gen3 is none, default gripper for Gen3 lite is gen3_lite_2f -->
     <arg name="gripper" default="" if="$(eval arg('arm') == 'gen3')"/>
     <arg name="gripper" default="gen3_lite_2f" if="$(eval arg('arm') == 'gen3_lite')"/>
@@ -143,11 +146,13 @@
         <include file="$(find kortex_description)/../kortex_move_it_config/$(arg arm)_move_it_config/launch/move_group.launch" if="$(eval not arg('gripper'))"> 
             <arg name="dof" value="$(arg dof)"/>
             <arg name="prefix" value="$(arg prefix)"/>
+            <arg name="pipeline" value="$(arg pipeline)" />
         </include>
         <!-- With gripper -->
         <include file="$(find kortex_description)/../kortex_move_it_config/$(arg arm)_$(arg gripper)_move_it_config/launch/move_group.launch" unless="$(eval not arg('gripper'))">
             <arg name="dof" value="$(arg dof)"/>
             <arg name="prefix" value="$(arg prefix)"/>
+            <arg name="pipeline" value="$(arg pipeline)" />
         </include>
 
         <!-- Sleep, then unpause the physics in Gazebo and home the robot -->
