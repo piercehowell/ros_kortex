@@ -10,7 +10,8 @@
     <arg name="x0" default="0"/>
     <arg name="y0" default="0"/>
     <arg name="z0" default="0"/>
-
+    
+    
     <!-- Arm type -->
     <arg name="arm" default="gen3"/>
     <arg name="dof" default="7" if="$(eval arg('arm') == 'gen3')"/> <!-- Number of degrees of freedom of the arm -->
@@ -27,6 +28,7 @@
     <arg name="robot_name" default="my_$(arg arm)"/>
     <arg name="prefix" default=""/>
     <arg name="cyclic_data_publish_rate" default="40"/> <!--Hz-->
+    <arg name="use_hard_limits" default="false"/>    
 
     <!-- Gazebo parameters -->
     <arg name="use_sim_time" default="true"/>
@@ -147,12 +149,14 @@
             <arg name="dof" value="$(arg dof)"/>
             <arg name="prefix" value="$(arg prefix)"/>
             <arg name="pipeline" value="$(arg pipeline)" />
+            <arg name="use_hard_limits" value="$(arg use_hard_limits)" />
         </include>
         <!-- With gripper -->
         <include file="$(find kortex_description)/../kortex_move_it_config/$(arg arm)_$(arg gripper)_move_it_config/launch/move_group.launch" unless="$(eval not arg('gripper'))">
             <arg name="dof" value="$(arg dof)"/>
             <arg name="prefix" value="$(arg prefix)"/>
             <arg name="pipeline" value="$(arg pipeline)" />
+            <arg name="use_hard_limits" value="$(arg use_hard_limits)" />
         </include>
 
         <!-- Sleep, then unpause the physics in Gazebo and home the robot -->
